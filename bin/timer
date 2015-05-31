@@ -1,0 +1,61 @@
+#!/bin/bash
+TIME=$1
+
+alarm() {
+    speaker-test --frequency $1 -t sine > /dev/null &
+    pid=$!
+    sleep 0.${2}s
+    kill -9 $pid
+}
+
+if [[ -z "$1" ]]; then
+    TIME="15m"
+fi
+
+# if $TIME is not numeric
+# extract the number and the unit
+# ex: timer 30s; timer 10m, timer 1h;
+
+if [[ ! $TIME =~ ^-?[0-9]+$ ]]; then
+    # _time is always in seconds
+    _time=${TIME::-1}
+    unit=${TIME: -1}
+
+    case $unit in
+        's')
+            # do nothing
+            ;;
+        'm')
+            echo "minutes"
+            _time="`expr $_time '*' 60 `"
+            ;;
+        'h')
+            echo 'hours'
+            _time="`expr $_time '*' 60 '*' 60`"
+            ;;
+        *)
+            echo "Unkown unit: $unit "
+            exit
+            ;;
+    esac
+else
+    # If no unit is given we assume it is minutes
+    _time=`expr $TIME '*' 60`
+fi
+
+
+echo
+echo Time: $TIME
+echo
+
+
+
+while [[ 0 -ne $_time ]]; do
+    echo -ne "\t$_time ...\r"
+    sleep 1
+    _time=$[$_time-1]
+done
+
+echo "Time is up :)";
+echo
+alarm 3000 400

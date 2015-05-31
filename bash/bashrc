@@ -1,0 +1,90 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+#
+# Colors
+#
+
+# Color ls
+alias ls='ls --color=auto'
+
+# Color grep
+alias grep='grep -n --color=auto'
+
+# Color less
+export less="-R"
+
+# Display available ram in mb
+alias free="free -m -h"
+
+# I hate to type clear
+alias c="clear"
+
+# G for git
+alias g="git"
+
+# git status
+alias gs="git status"
+
+# ga - git add
+alias ga="git add"
+
+# gc - git commit
+alias gc="git commit"
+
+# gl - git log
+alias gl="git log"
+
+alias gd="git diff"
+
+alias gt="git difftool"
+
+# ls vertical file list, show dirs first, files second, links third
+alias lsl="ls -1 --group-directories-first"
+
+# v for vim
+alias v="vim"
+
+# e for emacs -nw
+alias e="emacs -nw"
+
+# post json using curl
+alias cuson='curl -H "Content-Type: application/json"'
+
+#PS1='[\u@\h \W]\$ '
+#PS1='\[\e[0;37m\]\u\[\e[m\] \[\e[1;39m\]\w\[\e[m\] \[\e[1;35m\]$(__git_ps1)\[\e[m\] \[\e[0;35m\]λ \[\e[m\]\[\e[0;39m\] '
+#PS1=' \[\e[1;15m\]\W\[\e[m\]\[\e[1;35m\]$(__git_ps1)\[\e[m\] \[\e[0;35m\]\n λ \[\e[m\]\[\e[0;39m\] '
+PS1=' \[\e[1;15m\]\W\[\e[m\]\[\e[1;35m\]\[\e[m\] \[\e[0;35m\] >\[\e[m\]\[\e[0;39m\] '
+#PS1='\[\e[0;35m\] λ\[\e[m\]\[\e[0;39m\] '
+#PS1='\n \[\e[0;35m\] '
+
+
+# Use vim keybings
+set -o vi
+
+# map <esc> to jk in insert-mode
+bind -m vi-insert '"jk":vi-movement-mode'
+
+
+# ^p check for partial match in history
+#bind -m vi-insert "\C-p":dynamic-complete-history
+
+# ^n cycle through the list of partial matches
+#bind -m vi-insert "\C-n":menu-complete
+
+# cycle between completion
+#[[ $- = *i* ]] && bind TAB:menu-complete
+
+export TERM=xterm-256color
+
+export EDITOR=vim
+export BROWSER=chromium
+
+# TODO make sure those work
+#export WORKON_HOME=$HOME/.virtualenvs
+#source /usr/bin/virtualenvwrapper.sh
+export LANG=en_US.UTF-8

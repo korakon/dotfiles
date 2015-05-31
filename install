@@ -1,0 +1,89 @@
+#!/bin/bash
+
+
+#
+# args passed to ln
+#
+
+LN_ARGS="-sf"
+
+#
+# current script dir
+#
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+#
+# Link dotfiles to their dirs
+#
+
+#
+# make a hash of dotfile->destination
+#
+
+typeset -A des
+
+# Bash
+des[bash/bashrc]="$HOME/.bashrc"
+
+# i3
+des[i3]=$HOME/.i3
+
+# Vim
+des[vim/vimrc]="$HOME/.vimrc"
+
+# X
+des[x/Xresources]="$HOME/.Xresources"
+des[x/xinitrc]="$HOME/.xinitrc"
+
+# zsh & oh-my-zsh
+des[zsh/zshrc]="$HOME/.zshrc"
+des[zsh/custom/*]="$HOME/.oh-my-zsh/custom/"
+des[zsh/themes/*]="$HOME/.oh-my-zsh/custom/themes"
+
+# emacs
+des[emacs/init.el]="$HOME/.emacs.d/init.el"
+des[bin/e]="$HOME/bin/"
+
+# dartium
+des[bin/clean-dartium]="$HOME/bin/"
+
+# nowdo
+des[bin/nowdo]="$HOME/bin/"
+
+# timer
+des[bin/timer]="$HOME/bin/"
+
+# blabla
+des[bin/blabla]="$HOME/bin/"
+
+# docker
+des[docker/docker-clean]="$HOME/bin/"
+
+# mpv
+des[mpv/mpv.conf]="$HOME/.config/mpv/"
+mkdir -p "${des[mpv/mpv.conf]}"
+
+# racket
+des[racket/racketrc]="$HOME/.racketrc"
+
+# cabal
+des[cabal/config]="$HOME/.cabal/config"
+
+
+for i in "${!des[@]}"
+do
+  # script file
+  f="$DIR/$i"
+
+  # Make the script executable
+  chmod +x $f
+
+  destination="${des[$i]}"
+  printf "%-25s -> %s\n" $i $destination
+
+  ln $LN_ARGS $f "$destination" || {
+	echo FAILED
+	exit
+  }
+done

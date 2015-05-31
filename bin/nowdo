@@ -1,0 +1,91 @@
+#!/bin/sh
+
+TODOTEXT="
+#TODO:
+  - 
+"
+HELP="
+\n
+    nowdo\n
+\n
+    OPTIONS:\n
+\n
+    t\t\t                 show tomorrow \n
+    y\t\t                 show yesterday todo \n
+    l\t\t                 list all todos \n
+    p\t\t                 procastinate, move yesterday's todos to today \n
+    -h, --help\t          show this help \n
+\n
+\n
+"
+
+Help() {
+    echo -e $HELP
+}
+
+todo() {
+    mkdir -p ~/todos
+
+    TODONAME=~/todos/TODO-$1
+
+    #
+    # create todo file if it doesn't exist
+    #
+
+    if [ ! -f $TODONAME ]
+    then
+      echo "DATE: $1/`date "+%T"`" > $TODONAME
+      echo "$TODOTEXT" >> $TODONAME
+    fi
+
+    #
+    # open the file using $EDITOR
+    # if vim: go to line and column
+    #
+
+    if [ $EDITOR == 'vim' ]
+    then
+        $EDITOR "+call cursor(4, 4)" $TODONAME
+    else
+        $EDITOR $TODONAME
+    fi
+}
+
+
+#
+# open yesterday todo if 'y' is in argumenets
+#
+
+DATE_FORMAT="+%Y-%m-%d"
+
+case $1 in
+    -h | --help)
+        Help
+        ;;
+    y)
+        DATE=`date "$DATE_FORMAT" -d "yesterday"`
+        todo $DATE
+        ;;
+    t)
+        DATE=`date "$DATE_FORMAT" -d "tomorrow"`
+        todo $DATE
+        ;;
+    l)
+        ls ~/todos | sort
+        ;;
+    p)
+        YDATE=`date "$DATE_FORMAT" -d "yesterday"`
+        DATE=`date "$DATE_FORMAT"`
+        echo "Moving yesterday tasks to today"
+        cp ~/todos/TODO-$YDATE ~/todos/TODO-$DATE
+        todo $DATE
+        ;;
+    "")
+        DATE=`date "$DATE_FORMAT"`
+        todo $DATE
+        ;;
+    *)
+        echo Unknown arg $1
+        Help
+        ;;
+esac

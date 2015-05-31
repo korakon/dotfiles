@@ -1,0 +1,9 @@
+# Start it in checked mode
+
+DART_FLAGS="--checked"
+CLEAN_DIR=/tmp/clean-datium
+mkdir -p $CLEAN_DIR
+
+export DART_FLAGS="--checked"
+
+dartium --user-data-dir=$CLEAN_DIR

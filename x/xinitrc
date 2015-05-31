@@ -1,0 +1,71 @@
+#!/bin/sh
+
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
+sysresources=/etc/X11/xinit/.Xresources
+sysmodmap=/etc/X11/xinit/.Xmodmap
+
+# merge in defaults and keymaps
+
+if [ -f $sysresources ]; then
+    xrdb -merge $sysresources
+
+fi
+
+if [ -f $sysmodmap ]; then
+    xmodmap $sysmodmap
+fi
+
+if [ -f "$userresources" ]; then
+    xrdb -merge "$userresources"
+fi
+
+if [ -f "$usermodmap" ]; then
+    xmodmap "$usermodmap"
+fi
+
+# start some nice programs
+
+
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+	for f in /etc/X11/xinit/xinitrc.d/* ; do
+		[ -x "$f" ] && . "$f"
+	done
+	unset f
+fi
+
+
+# TODO
+# Detect if there is two monitors
+# if true set the display to two monitrs
+#else do nothing
+#Enable the two monitors
+# xrandr --output LVDS1 --auto --output HDMI1 --auto --right-of LVDS1
+xrandr --output HDMI1 --primary  --auto --output LVDS1 --auto --below HDMI1
+#xrandr --output VGA1 --primary  --auto --output LVDS1 --auto --below VGA1
+
+# Set cursor
+xsetroot -cursor_name left_ptr
+
+# Set keyboard layout
+setxkbmap fr
+
+# Set Mouse Acceleration
+xset m 1 0
+
+# add fonts to x
+xset +fp /etc/share/fonts/TTF
+xset +fp /etc/share/fonts/local
+xset fp rehash
+
+# set color only for now
+xsetroot -solid "#2F8E84"
+#sh ~/.fehbg
+
+# Start redshift
+redshift -l 52.5167:13.3833 &
+
+# Start i3
+exec i3
+
+

@@ -1,0 +1,7 @@
+# Clean all containers
+#!/bin/bash
+
+docker rm -f `docker ps -aq`
+
+# Clean untaged images
+docker rmi -f $(docker images -a | awk '/^<none>/ { print $3 }')
