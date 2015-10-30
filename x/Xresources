@@ -1,9 +1,6 @@
-!xterm colors
-xterm*foreground        : #666666
-xterm*background        : #FFFFFF
 !xterm*faceName          : terminus:pixelsize=11
-xterm*faceName: DejaVu Sans Mono:pixelsize=11
-xterm*wideFont: DejaVu Sans Mono:pixelsize=11
+xterm*faceName: Source Code Pro Light:pixelsize=11
+xterm*wideFont: Source Code Pro Light:pixelsize=11
 XTerm*faceNameDoublesize:   Droid Sans Mono:style=Regular
 xterm*dynmicColors      : true
 xterm*utf8              : 2
@@ -13,8 +10,8 @@ xterm*locale            : true
 !xterm*eightBitInput:      true
 xterm*saveLines:          1000
 xterm*bellIsUrgent: true
-xterm*borderWidth: 10
-xterm*borderColor: white
+xterm*borderWidth: 15
+xterm*borderColor: #002b36
 xterm*scrollBar     : false
 ! Xterm meta key, to work with emacs
 XTerm*metaSendsEscape: true
@@ -30,7 +27,66 @@ xterm -xrm 'XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CL
 !
 
 
-Xcursor.size:  6 
+
+#define S_base03        #002b36
+#define S_base02        #073642
+#define S_base01        #586e75
+#define S_base00        #657b83
+#define S_base0         #839496
+#define S_base1         #93a1a1
+#define S_base2         #eee8d5
+#define S_base3         #fdf6e3
+#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+#define S_violet        #6c71c4
+#define S_blue          #268bd2
+#define S_cyan          #2aa198
+#define S_green         #859900
+
+XTerm*background:            S_base03
+XTerm*foreground:            S_base0
+XTerm*fading:                40
+XTerm*fadeColor:             S_base03
+XTerm*cursorColor:           S_base1
+XTerm*pointerColorBackground:S_base01
+XTerm*pointerColorForeground:S_base1
+
+!! black dark/light
+XTerm*color0:                S_base02
+XTerm*color8:                S_base03
+
+!! red dark/light
+XTerm*color1:                S_red
+XTerm*color9:                S_orange
+
+!! green dark/light
+XTerm*color2:                S_green
+XTerm*color10:               S_base01
+
+!! yellow dark/light
+XTerm*color3:                S_yellow
+XTerm*color11:               S_base00
+
+!! blue dark/light
+XTerm*color4:                S_blue
+XTerm*color12:               S_base0
+
+!! magenta dark/light
+XTerm*color5:                S_magenta
+XTerm*color13:               S_violet
+
+!! cyan dark/light
+XTerm*color6:                S_cyan
+XTerm*color14:               S_base1
+
+!! white dark/light
+XTerm*color7:                S_base2
+XTerm*color15:               S_base3
+
+
+Xcursor.size:  6
 
 ! Forbid bold font faces; bold type is light blue.
 !XTerm*colorBDMode: true
