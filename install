@@ -68,6 +68,10 @@ des[racket/racketrc]="$HOME/.racketrc"
 # cabal
 des[cabal/config]="$HOME/.cabal/config"
 
+# npm
+des[npm/npmrc]="$HOME/.npmrc"
+
+
 help() {
     echo "
         install [install | uninstall]

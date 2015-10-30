@@ -1,0 +1,6 @@
+init.author.name=Korakon
+init.author.email=i@korakon.com
+init.author.url=http://korakon.com
+email=i@korakon.com
+prefix=~/.npm
+tmp=/tmp
