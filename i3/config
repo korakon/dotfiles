@@ -147,8 +147,8 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # No borders
-new_window none
-hide_edge_borders both
+#new_window both
+#hide_edge_borders both
 
 
 # No Titles
@@ -163,11 +163,11 @@ bindsym $mod+Shift+p exec systemctl suspend
 
 
 # Colors
-#colourclass               border    bckgrnd    text       indicator
-client.focused             #FFFFFF   #FFFFFF    #666666    #CCCCCC
-client.focused_inactive    #FFFFFF   #FFFFFF    #666666    #CCCCCC
-client.unfocused           #FFFFFF   #CCCCCC    #666666    #CCCCCC
-client.urgent              #FFFFFF   #000040    #666666    #CCCCCC
+# colourclass              border    bckgrnd    text       indicator
+#client.focused             #FF0000   #FF0000    #666666    #CCCCCC
+#client.focused_inactive    #FF0000   #FF0000    #666666    #CCCCCC
+#client.unfocused           #FF0000   #FFFFFF    #666666    #CCCCCC
+#client.urgent              #FF0000   #000040    #666666    #CCCCCC
 
 
 # The font
