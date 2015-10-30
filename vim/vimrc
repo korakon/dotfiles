@@ -80,10 +80,10 @@ call vundle#end()
 filetype indent plugin on
 
 " Colorscheme
-colorscheme default
+colorscheme badwolf
 
 " Enable syntax highlighting
-syntax off
+syntax on
 
 " 80 colum
 set colorcolumn=79
