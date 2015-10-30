@@ -27,7 +27,7 @@ typeset -A des
 des[bash/bashrc]="$HOME/.bashrc"
 
 # i3
-des[i3]=$HOME/.i3
+des[i3/config]="$HOME/.i3/config"
 
 # Vim
 des[vim/vimrc]="$HOME/.vimrc"
@@ -43,26 +43,24 @@ des[zsh/themes/*]="$HOME/.oh-my-zsh/custom/themes"
 
 # emacs
 des[emacs/init.el]="$HOME/.emacs.d/init.el"
-des[bin/e]="$HOME/bin/"
-
-# dartium
-des[bin/clean-dartium]="$HOME/bin/"
+des[bin/e]="$HOME/bin/e"
 
 # nowdo
-des[bin/nowdo]="$HOME/bin/"
+des[bin/nowdo]="$HOME/bin/nowdo"
 
 # timer
-des[bin/timer]="$HOME/bin/"
+des[bin/timer]="$HOME/bin/timer"
+des[bin/webcam]="$HOME/bin/webcam"
 
 # blabla
-des[bin/blabla]="$HOME/bin/"
+des[bin/blabla]="$HOME/bin/blabla"
 
 # docker
-des[docker/docker-clean]="$HOME/bin/"
+des[docker/docker-clean]="$HOME/bin/docker-clean"
 
 # mpv
-des[mpv/mpv.conf]="$HOME/.config/mpv/"
-mkdir -p "${des[mpv/mpv.conf]}"
+des[mpv/mpv.conf]="$HOME/.config/mpv/mpv.conf"
+mkdir -p "dirname ${des[mpv/mpv.conf]}"
 
 # racket
 des[racket/racketrc]="$HOME/.racketrc"
@@ -70,20 +68,34 @@ des[racket/racketrc]="$HOME/.racketrc"
 # cabal
 des[cabal/config]="$HOME/.cabal/config"
 
+help() {
+    echo "
+        install [install | uninstall]
+        install -> Install the dotfiles
+        uninstall -> Removes them
+    "
+}
 
-for i in "${!des[@]}"
-do
-  # script file
-  f="$DIR/$i"
+install() {
 
-  # Make the script executable
-  chmod +x $f
+    for i in "${!des[@]}"
+    do
+      # script file
+      f="$DIR/$i"
 
-  destination="${des[$i]}"
-  printf "%-25s -> %s\n" $i $destination
+      # Make the script executable
+      chmod +x $f
 
-  ln $LN_ARGS $f "$destination" || {
-	echo FAILED
-	exit
-  }
-done
+      destination="${des[$i]}"
+      printf "%-25s -> %s\n" $i $destination
+
+      ln $LN_ARGS $f "$destination" || {
+        echo FAILED TO LINK $f
+        exit
+      }
+    done
+
+}
+
+
+install;
