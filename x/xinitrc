@@ -59,7 +59,7 @@ xset +fp /etc/share/fonts/local
 xset fp rehash
 
 # set color only for now
-xsetroot -solid "#2F8E84"
+xsetroot -solid "blue"
 #sh ~/.fehbg
 
 # Start redshift
@@ -67,5 +67,3 @@ redshift -l 52.5167:13.3833 &
 
 # Start i3
 exec i3
-
-
