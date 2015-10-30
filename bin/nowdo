@@ -2,7 +2,7 @@
 
 TODOTEXT="
 #TODO:
-  - 
+    - 
 "
 HELP="
 \n
@@ -45,7 +45,7 @@ todo() {
 
     if [ $EDITOR == 'vim' ]
     then
-        $EDITOR "+call cursor(4, 4)" $TODONAME
+        $EDITOR "+call cursor(4, 6)" $TODONAME
     else
         $EDITOR $TODONAME
     fi
