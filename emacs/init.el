@@ -3,12 +3,12 @@
 ;; Packages
 (require 'package)
 (add-to-list 'package-archives
-                 '("marmalade" .
-                 "http://marmalade-repo.org/packages/"))
+             '("marmalade" .
+               "http://marmalade-repo.org/packages/"))
 
 (add-to-list 'package-archives
-                '("melpa" .
-                "http://melpa.milkbox.net/packages/"))
+             '("melpa" .
+               "http://melpa.milkbox.net/packages/"))
 
 (package-initialize)
 
@@ -16,18 +16,25 @@
 (setq make-backup-files nil)
 
 ;; Autosave in .emacs.d/autosave
-
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
+
 ;; disable autosave
 (setq auto-save-default nil)
 (setq make-backup-files nil)
 
+
 ;; Highlight the current line
 (global-hl-line-mode 0)
+
+
+;; Change separator color
+(set-face-attribute 'vertical-border
+                    nil
+                    :foreground "#073642")
 
 ;; Indent = 4 spaces
 (setq standard-indent 4)
@@ -35,7 +42,6 @@
 (setq-default indent-tabs-mode nil)
 (electric-indent-mode 1)
 
-(setq scroll-step 1)
 
 ;; No backups
 (setq make-backup-files nil)
@@ -59,43 +65,44 @@
 (setq savehist-additional-variables '(kill-ring search-ring regexp-search-ring cd))
 
 ;; Easy moving between windows
-
 (windmove-default-keybindings) ;; Bound to Shift
 
 (require 'web-mode)
 (defun web-mode-hook ()
   "Hooks for Web mode."
-  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-markup-indent-offset 4)
   (setq web-mode-disable-css-colorization t)
 )
 (add-hook 'web-mode-hook  'web-mode-hook)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.styl?\\'" . css-mode))
+(add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
+(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; Editing
-
 ;; GO
-
 (add-hook 'before-save-hook 'gofmt-before-save)
 
 ;; Haskell
-
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
+;; Lisp
+(setq slime-contribs '(slime-fancy))
 (show-paren-mode 1)
+(setq inferior-lisp-program "/usr/bin/sbcl")
 
 (global-set-key "\M- " 'hippie-expand)
 ;;(global-set-key [tab] 'tab-to-tab-stop)
 
+;; C
 (setq c-default-style "linux"
       c-basic-offset 4)
 
 ;; setup files ending in “.js” to open in js2-mode
-(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
-
+;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;; use web-mode instead
 ;; add globals
 (setq js2-global-externs '("require" "module" "process"
                            "it" "expect" "describe" "window"))
@@ -109,18 +116,14 @@
 
 ;; Scrolling
 ;; scroll one line at a time (less "jumpy" than defaults)
-
 (setq mouse-wheel-scroll-amount '(2 ((shift) . 2))) ;; one line at a time
-
 (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
-
 (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
-
 (setq scroll-step 1) ;; keyboard scroll one line at a time
 
 ;; Colors
 
-;; Set emacs background colour/
+;; Set emacs background colour
 
 ;; UI
 ;; Make the ui simpler
@@ -129,27 +132,20 @@
 (fringe-mode 0)
 (scroll-bar-mode 0)
 
-(set-background-color "white")
 
 ;; Default font
-;;(set-face-attribute  'default nil :font "Droid Sans Mono-8")
+;; Disable syntax highligthing
+(add-to-list 'default-frame-alist '(font .  "-adobe-Source Code Pro-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1" ))
+;(set-face-attribute  'default nil :font "-adobe-Source Code Pro-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")
 
-(add-to-list 'default-frame-alist '(font . "Droid Sans Mono-8"))
-(add-to-list 'default-frame-alist '(foreground-color . "#212121"))
+
+
+;(add-to-list 'default-frame-alist '(font . "Droid Sans Mono-8"))
+;(add-to-list 'default-frame-alist '(foreground-color . "#212121"))
 
 ;; Syntax
-;; Disable syntax highligthing
 (global-font-lock-mode 1)
 
-;; Modeline
-;; Hide it completly
-;;(setq-default mode-line-format nil)
-
-
-;; Remove vertical border
-(set-face-attribute 'vertical-border
-                    nil
-                    :foreground "#cccccc")
 
 (setq-default left-margin-width 1 right-margin-width 1) ; Define new widths.
 
@@ -164,39 +160,8 @@
 
 (setq ido-enable-flex-matching t)
 
-;; Sort lines by length
-
-
 ;; Hide splash screen
 (setq inhibit-startup-message t)
-(setq inhibit-startup-message t)
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(minibuffer-auto-raise t)
- '(minibuffer-prompt-properties (quote (read-only t face minibuffer-prompt))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(minibuffer-prompt ((t (:foreground "retrogreen" :height 1.0 :family "Terminus"))))
- '(mode-line ((t (:background "#38A876" :foreground "white" :box nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "xos4" :family "Terminus"))))
- '(mode-line-highlight ((t (:background "gray32" :foreground "white"))))
- '(mode-line-inactive ((t (:background "gray" :foreground "dim gray" :weight light))))
- '(modeline-inactive ((t (:background "gainsboro" :foreground "dim gray" :weight light :family "Terminus"))) t))
-
-;(set-face-attribute 'mode-line nil
-;   :foreground "white"
-;    :background "#38A876"
-;    :overline nil
-;    :box nil
-;    ;;:font "Terminus-9"
-;    :underline nil)
-
 
 (defun my-generate-tab-stops (&optional width max)
   "Return a sequence suitable for `tab-stop-list'."
@@ -209,3 +174,42 @@
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (solarized-dark)))
+ '(custom-safe-themes
+   (quote
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+
+ '(mode-line ((t (:box nil
+                       :underline nil
+                       :overline nil
+                       :foreground "#002b36"
+                       :background "gold"
+                       :font "Terminus-8"
+                       ))))
+
+ '(mode-line-inactive ((t (:box nil
+                                :foreground "#333"
+                                :background "#ccc"
+                                :font "Terminus-8"
+                                :underline nil
+                                :overline nil))))
+
+ '(mode-line-buffer-id ((t (:foreground "#002b36"))))
+
+
+ '(mode-line-highlight ((t (:box nil
+                                 :foreground "gray"
+                                 :overline nil))))
+
+
+ )
