@@ -157,6 +157,11 @@ for_window [class="^.*"] border none
 # i3lock
 bindsym $mod+Shift+s exec i3lock -c "#000000"
 
+# suspend
+bindsym $mod+Shift+p exec systemctl suspend
+
+
+
 # Colors
 #colourclass               border    bckgrnd    text       indicator
 client.focused             #FFFFFF   #FFFFFF    #666666    #CCCCCC
@@ -176,13 +181,13 @@ bindsym XF86AudioMute exec amixer -q set Master toggle
 
 # Music control
 # play
-bindsym $Alt+Up exec cmus-remote --play
+#bindsym $Alt+Up exec cmus-remote --play
 # pause
-bindsym $Alt+Down exec cmus-remote --pause
+#bindsym $Alt+Down exec cmus-remote --pause
 # next
-bindsym $Alt+Right exec cmus-remote --next
+#bindsym $Alt+Right exec cmus-remote --next
 # prev
-bindsym $Alt+Left exec cmus-remote --prev
+#bindsym $Alt+Left exec cmus-remote --prev
 
 
 # move workspace to another monitor
