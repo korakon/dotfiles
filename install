@@ -71,6 +71,11 @@ des[cabal/config]="$HOME/.cabal/config"
 # npm
 des[npm/npmrc]="$HOME/.npmrc"
 
+# dircolors
+des[dircolors/dircolors]="$HOME/.dircolors"
+
+# xmodmap
+des[xmodmap/Xmodmap]="$HOME/.Xmodmap"
 
 help() {
     echo "
