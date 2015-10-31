@@ -1,0 +1,10 @@
+! caps lock             -> Hyper, Is used in emacs
+! windows key [super]   -> used in i3
+! shift + caps lock     -> Caps Lock
+
+clear Lock 
+clear Mod4
+clear Mod3
+keycode 66 = Hyper_L Caps_Lock NoSymbol NoSymbol
+add Mod4 = Hyper_L
+add Mod3 = Super_L
