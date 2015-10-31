@@ -100,6 +100,13 @@
 (setq c-default-style "linux"
       c-basic-offset 4)
 
+;; Org mode
+(add-hook 'org-mode-hook (lambda ()
+                           "Increase text size in org mode buffers"
+                           (interactive)
+                           (text-scale-set 1)))
+
+
 ;; setup files ending in “.js” to open in js2-mode
 ;; (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
 ;; use web-mode instead
@@ -209,6 +216,7 @@
 
  '(mode-line-highlight ((t (:box nil
                                  :foreground "gray"
+                                 :background "#073642"
                                  :overline nil))))
 
 
