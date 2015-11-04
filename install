@@ -55,7 +55,10 @@ des[bin/webcam]="$HOME/bin/webcam"
 des[bin/blabla]="$HOME/bin/blabla"
 
 # docker
-des[docker/docker-clean]="$HOME/bin/docker-clean"
+des[bin/docker-clean]="$HOME/bin/docker-clean"
+
+# bin/emacs
+des[bin/e]="$HOME/bin/e"
 
 # mpv
 des[mpv/mpv.conf]="$HOME/.config/mpv/mpv.conf"
@@ -79,7 +82,7 @@ des[xmodmap/Xmodmap]="$HOME/.Xmodmap"
 # Timers
 ## Commit my ~/org/ dir every day
 mkdir -p "$HOME/.config/systemd/"
-des[bin/org-commit]="$HOME/org-commit"
+des[bin/org-commit]="$HOME/bin/org-commit"
 des[systemd/org-commit.timer]="$HOME/.config/systemd/user/org-commit.timer"
 des[systemd/org-commit.service]="$HOME/.config/systemd/user/org-commit.service"
 
@@ -92,6 +95,8 @@ help() {
 }
 
 install() {
+    // make all files in ./bin/ exec
+    chmod +x ./bin/*
 
     for i in "${!des[@]}"
     do
@@ -99,7 +104,6 @@ install() {
       f="$DIR/$i"
 
       # Make the script executable
-      # chmod +x $f
 
       destination="${des[$i]}"
       printf "%-25s -> %s\n" $i $destination

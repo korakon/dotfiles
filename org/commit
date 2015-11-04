@@ -1,4 +1,0 @@
-#!/bin/env bash
-
-cd ~/org/
-git commit -a -m "Automatice daily commit `date`"
