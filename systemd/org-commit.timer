@@ -1,0 +1,10 @@
+[Unit]
+Description=Commit ~/org/ everyday
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+Unit=org-commit.service
+
+[Install]
+WantedBy=org-commit.service

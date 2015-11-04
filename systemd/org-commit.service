@@ -1,0 +1,11 @@
+
+[Unit]
+Description=Commit ~/org/
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash /home/n/bin/org-commit
+
+
+[Install]
+WantedBy=basic.target
