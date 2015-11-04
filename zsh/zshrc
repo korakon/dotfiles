@@ -60,7 +60,12 @@ plugins=(git\
          virtualenvwrapper_lazy\
          history\
          history-substring-search\
+         cp\
+         docker\
+         emacs\
          systemd\
+         gulp\
+         pass\
          golang)
 
 source $ZSH/oh-my-zsh.sh

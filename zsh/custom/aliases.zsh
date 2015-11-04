@@ -39,7 +39,7 @@ alias lsl="ls -1 --group-directories-first"
 alias v="vim"
 
 # e for emacs
-alias e="emacsclient -c -a '' &"
+#alias e="emacsclient -c -a '' &"
 
 # j for jobs
 alias j=jobs

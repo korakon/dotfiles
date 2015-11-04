@@ -215,6 +215,10 @@ set notimeout ttimeout ttimeoutlen=200
 " Use <F11> to toggle between 'paste' and 'nopaste'
 set pastetoggle=<F3>
 
+nnoremap <Leader>Y "*y
+nnoremap <Leader>p "*p
+nnoremap <Leader>P "*P"
+
 " ----------------------------------------------- Costum stuff
 " Show matching brackets/parenthesis
 set showmatch

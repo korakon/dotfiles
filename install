@@ -43,7 +43,6 @@ des[zsh/themes/*]="$HOME/.oh-my-zsh/custom/themes"
 
 # emacs
 des[emacs/init.el]="$HOME/.emacs.d/init.el"
-des[bin/e]="$HOME/bin/e"
 
 # nowdo
 des[bin/nowdo]="$HOME/bin/nowdo"
@@ -77,6 +76,13 @@ des[dircolors/dircolors]="$HOME/.dircolors"
 # xmodmap
 des[xmodmap/Xmodmap]="$HOME/.Xmodmap"
 
+# Timers
+## Commit my ~/org/ dir every day
+mkdir -p "$HOME/.config/systemd/"
+des[bin/org-commit]="$HOME/org-commit"
+des[systemd/org-commit.timer]="$HOME/.config/systemd/user/org-commit.timer"
+des[systemd/org-commit.service]="$HOME/.config/systemd/user/org-commit.service"
+
 help() {
     echo "
         install [install | uninstall]
@@ -93,7 +99,7 @@ install() {
       f="$DIR/$i"
 
       # Make the script executable
-      chmod +x $f
+      # chmod +x $f
 
       destination="${des[$i]}"
       printf "%-25s -> %s\n" $i $destination

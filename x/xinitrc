@@ -20,7 +20,12 @@ if [ -f "$userresources" ]; then
     xrdb -merge "$userresources"
 fi
 
+# Set keyboard layout
+setxkbmap fr
+
+
 if [ -f "$usermodmap" ]; then
+    echo "mode Map"
     xmodmap "$usermodmap"
 fi
 
@@ -46,9 +51,6 @@ xrandr --output HDMI1 --primary  --auto --output LVDS1 --auto --below HDMI1
 
 # Set cursor
 xsetroot -cursor_name left_ptr
-
-# Set keyboard layout
-setxkbmap fr
 
 # Set Mouse Acceleration
 xset m 1 0
