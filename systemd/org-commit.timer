@@ -1,8 +1,8 @@
 [Unit]
-Description=Commit ~/org/ everyday
+Description=Commit ~/org/ every hour
 
 [Timer]
-OnCalendar=daily
+OnCalendar=hourly
 Persistent=true
 Unit=org-commit.service
 

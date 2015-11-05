@@ -1,4 +1,15 @@
 #!/bin/bash
 
 cd ~/org/
-git commit -a -m "Automatice daily commit `date`"
+
+
+commit() {
+    git commit -a -m "Automated commit by org-commit.service `date`"
+}
+
+# Only commit if there are changes
+# Otherwise git will exit with a non 0 status code
+# And systemd will treat that as a failure
+if [ -n "$(git status --porcelain)" ]; then
+    commit;
+fi
