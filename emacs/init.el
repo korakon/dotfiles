@@ -210,7 +210,7 @@
 
 (setq org-todo-keyword-faces
       (quote (
-              ("TODO" :foreground "#dc322f" :weight bold :font "Terminus-8")
+              ("TODO" :foreground "#dc322f" :weight bold)
               ("STARTED" :foreground "#d33682" :weight bold)
               ("NEXT" :foreground "#2aa198" :weight bold)
               ("DONE" :foreground "#859900" :weight bold)
