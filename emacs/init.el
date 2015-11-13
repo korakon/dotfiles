@@ -94,8 +94,8 @@
 (add-hook 'web-mode-hook  'web-mode-hook)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.styl?\\'" . css-mode))
-(add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
-(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
+;(add-to-list 'auto-mode-alist '("\\.js?\\'" . js2-mode))
+;(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -136,6 +136,10 @@
 (setq org-show-notification-handler 'message)
 (setq org-clock-report-include-clocking-task t)
 (org-clock-persistence-insinuate)
+(setq org-timer-default-timer 25)
+
+;; Don't go to lask clocked task if no ac
+(setq org-clock-goto-may-find-recent-task nil)
 
 ;; Org-habits
 (setq org-habit-show-habits-only-for-today nil)
@@ -143,6 +147,7 @@
 ;; Org modules
 (require 'org-habit)
 (add-to-list 'org-modules 'org-habit)
+(add-to-list 'org-modules 'org-timer)
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key (kbd "<f12>") 'org-agenda)
@@ -153,7 +158,7 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 
 (setq org-completion-use-ido t)
-(setq org-hide-leading-starts t)
+(setq org-hide-leading-stars t)
 ;(setq org-log-done 'time)
 (setq org-log-done 'note)
 (setq org-refile-use-outline-path t)
@@ -185,10 +190,14 @@
   :END:
 ")
 
-(defvar korakon/org-dream-template "* STARTED %^{Title}
+(defvar korakon/org-dream-template "* %^{Title}
   %?
-  :LOGBOOK:
+  :PROPERTIES:
+  :Creation-Time: %U
   :END:
+")
+
+(defvar korakon/org-notes-template "* %?
   :PROPERTIES:
   :Creation-Time: %U
   :END:
@@ -197,6 +206,9 @@
 (setq org-capture-templates
       `(("t" "Todo" entry (file+headline "~/org/now.org" "Tasks")
          ,korakon/org-task-template)
+
+        ("n" "Note" entry (file+datetree "~/org/notes.org")
+         ,korakon/org-notes-template)
 
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
          ,korakon/org-journal-template :clock-in t :clock-resume t)
@@ -222,16 +234,50 @@
              (not (string= org-last-state org-state)))
     (org-clock-in)))
 
-(defun korakon/org-change-state-to-done-if-clock-out ()
-  "Prompt the user to change state after clock-out"
-  (org-todo))
 
-(add-hook 'org-clock-out-hook
-          'korakon/org-change-state-to-done-if-clock-out)
 
-(add-hook 'org-after-todo-state-change-hook
-          'korakon/org-clock-in-if-starting)
+;(defun korakon/org-change-state-to-done-if-clock-out ()
+;  "Prompt the user to change state after clock-out"
+;  (org-todo))
+;
+;(add-hook 'org-clock-out-hook
+;          'korakon/org-change-state-to-done-if-clock-out)
 
+
+(defun korakon/notify-timer-done ()
+  (org-clock-goto)
+  (org-clock-out)
+  ; Get current active task
+  (let* ((headline (thing-at-point 'line t))
+         (notification (concat "-a Org mode"
+                               "Task Done\n "
+                               (format "-> %s" headline))))
+
+    (start-process "orgmode" nil
+                   "/usr/bin/notify-send"
+                   notification)))
+
+
+(add-hook 'org-timer-done-hook 'korakon/notify-timer-done)
+
+
+
+(add-hook 'org-clock-in-hook '(lambda ()  (if (not org-timer-current-timer)
+                                              (org-timer-set-timer '(16)))))
+
+(add-hook 'org-clock-out-hook '(lambda ()  (org-timer-cancel-timer)
+                                            (setq org-mode-line-string nil)))
+
+;(add-hook 'org-after-todo-state-change-hook
+;          'korakon/org-clock-in-if-starting)
+
+(add-hook 'org-mode-hook '(lambda ()
+                            (setq org-file-apps
+                                  '((auto-mode . emacs)
+                                    ("pdf" . "xdg-open %s")
+                                    ("jpg" . "feh %s")
+                                    ("png" . "feh %s")
+                                    ("xcf" . "gimp %s")))))
 
 ;; Ace jumb
 (global-set-key (kbd "H-j") 'ace-jump-mode)
