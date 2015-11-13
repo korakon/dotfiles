@@ -10,6 +10,8 @@ commit() {
 # Only commit if there are changes
 # Otherwise git will exit with a non 0 status code
 # And systemd will treat that as a failure
-if [ -n "$(git status --porcelain)" ]; then
+
+if [ `git status | grep -c "working directory clean"` -ne 1 ]; then
+    git add *.org;
     commit;
 fi
