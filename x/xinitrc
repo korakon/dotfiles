@@ -67,5 +67,8 @@ xsetroot -solid "blue"
 # Start redshift
 redshift -l 52.5167:13.3833 &
 
+# Start dunst
+dunst &
+
 # Start i3
 exec i3

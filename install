@@ -81,10 +81,14 @@ des[xmodmap/Xmodmap]="$HOME/.Xmodmap"
 
 # Timers
 ## Commit my ~/org/ dir every day
-mkdir -p "$HOME/.config/systemd/"
+mkdir -p "$HOME/.config/systemd/user"
 des[bin/org-commit]="$HOME/bin/org-commit"
 des[systemd/org-commit.timer]="$HOME/.config/systemd/user/org-commit.timer"
 des[systemd/org-commit.service]="$HOME/.config/systemd/user/org-commit.service"
+
+# Dunst
+des[dunst/dunstrc]="$HOME/.config/dunst/dunstrc"
+
 
 help() {
     echo "
@@ -109,11 +113,10 @@ install() {
       printf "%-25s -> %s\n" $i $destination
 
       ln $LN_ARGS $f "$destination" || {
-        echo FAILED TO LINK $f
-        exit
+          echo FAILED TO LINK $f
+          exit
       }
     done
-
 }
 
 
