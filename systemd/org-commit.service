@@ -8,4 +8,4 @@ ExecStart=/usr/bin/bash /home/n/bin/org-commit
 
 
 [Install]
-WantedBy=basic.target
+WantedBy=org-commit.target
