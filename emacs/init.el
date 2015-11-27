@@ -85,6 +85,8 @@
 ;; Easy moving between windows
 (windmove-default-keybindings 'hyper)
 
+;; Reload files automatically
+(global-auto-revert-mode t)
 
 (require 'web-mode)
 (defun web-mode-hook ()
@@ -95,7 +97,7 @@
 (add-hook 'web-mode-hook  'web-mode-hook)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.styl?\\'" . css-mode))
-;(add-to-list 'auto-mode-alist '("\\.js?\\'" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js?\\'" . js2-mode))
 ;(setq web-mode-content-types-alist '(("jsx" . "\\.js[x]?\\'")))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -276,12 +278,29 @@
 ;          'korakon/org-clock-in-if-starting)
 
 (add-hook 'org-mode-hook '(lambda ()
+                            (push '("*" . ?☰) prettify-symbols-alist)
+                            (prettify-symbols-mode t)
                             (setq org-file-apps
                                   '((auto-mode . emacs)
                                     ("pdf" . "xdg-open %s")
                                     ("jpg" . "feh %s")
                                     ("png" . "feh %s")
                                     ("xcf" . "gimp %s")))))
+
+;; Replace \emsp with -> in org clock tables
+(defun korakon/org-clocktable-indent-string (level)
+  (if (= level 1)
+      ""
+    (let ((str ""))
+      (while (> level 2)
+        (setq level (1- level)
+              str (concat str "--")))
+      (concat str "-> "))))
+
+(advice-add 'org-clocktable-indent-string :override #'korakon/org-clocktable-indent-string)
+
+;; Buffers
+(global-set-key (kbd "H-b k") 'kill-this-buffer)
 
 ;; Ace jumb
 (global-set-key (kbd "H-j") 'ace-jump-mode)
@@ -389,4 +408,7 @@
  '(mode-line ((t (:box nil :underline nil :overline nil :foreground "#002b36" :background "gold" :font "Terminus-8"))))
  '(mode-line-buffer-id ((t (:foreground "#002b36"))))
  '(mode-line-highlight ((t (:box nil :foreground "gray" :background "#073642" :overline nil))))
- '(mode-line-inactive ((t (:box nil :foreground "#333" :background "#ccc" :font "Terminus-8" :underline nil :overline nil)))))
+ '(mode-line-inactive ((t (:box nil :foreground "#333" :background "#ccc" :font "Terminus-8" :underline nil :overline nil))))
+ '(org-clock-overlay ((t (:background "nill"))))
+ '(org-tag ((t (:weight normal :height 0.9 :family "Terminus"))))
+ '(variable-pitch ((t (:weight normal :family "Roboto")))))
