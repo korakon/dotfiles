@@ -83,7 +83,8 @@
 (setq savehist-save-minibuffer-history 1)
 
 ;; Easy moving between windows
-(windmove-default-keybindings) ;; Bound to Shift
+(windmove-default-keybindings 'hyper)
+
 
 (require 'web-mode)
 (defun web-mode-hook ()
@@ -136,7 +137,7 @@
 (setq org-show-notification-handler 'message)
 (setq org-clock-report-include-clocking-task t)
 (org-clock-persistence-insinuate)
-(setq org-timer-default-timer 25)
+(setq org-timer-default-timer 20)
 
 ;; Don't go to lask clocked task if no ac
 (setq org-clock-goto-may-find-recent-task nil)
@@ -176,6 +177,7 @@
                       ("reading" . ?r)))
 
 
+
 ;; TODO: move those to ~/org/templates/
 
 (defvar korakon/org-task-template "* TODO %?
@@ -204,7 +206,7 @@
 ")
 
 (setq org-capture-templates
-      `(("t" "Todo" entry (file+headline "~/org/now.org" "Tasks")
+      `(("t" "Todo" entry (file+headline "~/org/now.org" "Inbox")
          ,korakon/org-task-template)
 
         ("n" "Note" entry (file+datetree "~/org/notes.org")
@@ -218,13 +220,14 @@
 
 
 (setq org-todo-keywords
-      (quote ((sequence "TODO(t!)" "STARTED(s)" "NEXT(n!)" "|" "DONE(d!)" "CANCELLED(c@)"))))
+      (quote ((sequence "TODO(t!)" "STARTED(s)" "NEXT(n!)" "SOMEDAY(m)" "|" "DONE(d!)" "CANCELLED(c@)"))))
 
 (setq org-todo-keyword-faces
       (quote (
               ("TODO" :foreground "#dc322f" :weight bold)
               ("STARTED" :foreground "#d33682" :weight bold)
               ("NEXT" :foreground "#2aa198" :weight bold)
+              ("SOMEDAY" :foreground "gray" :weight bold)
               ("DONE" :foreground "#859900" :weight bold)
               ("CANCELLED" :foreground "#b58900" :weight bold))))
 
@@ -249,12 +252,13 @@
   (org-clock-out)
   ; Get current active task
   (let* ((headline (thing-at-point 'line t))
-         (notification (concat "-a Org mode"
+         (notification (concat
                                "Task Done\n "
                                (format "-> %s" headline))))
 
     (start-process "orgmode" nil
                    "/usr/bin/notify-send"
+                   "-a" "Org mode"
                    notification)))
 
 
@@ -315,12 +319,10 @@
 (fringe-mode 0)
 (scroll-bar-mode 0)
 
-
 ;; Default font
 ;; Disable syntax highligthing
-(add-to-list 'default-frame-alist '(font .  "-adobe-Source Code Pro-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1" ))
-;(set-face-attribute  'default nil :font "-adobe-Source Code Pro-normal-normal-normal-*-13-*-*-*-m-0-iso10646-1")
-
+(add-to-list 'default-frame-alist '(font .  "-adobe-Source Code Pro-medium-normal-normal-*-15-*-*-*-m-0-iso10646-1" ))
+;(add-to-list 'default-frame-alist '(font .  "Roboto Mono Bold"))
 
 
 ;(add-to-list 'default-frame-alist '(font . "Droid Sans Mono-8"))
@@ -366,6 +368,18 @@
  '(custom-safe-themes
    (quote
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
+ '(org-agenda-custom-commands
+   (quote
+    (("S" "Self"
+      ((agenda ""
+               ((org-agenda-category-filter-preset
+                 (quote
+                  ("+Self")))
+                (org-agenda-span 1)
+                (org-agenda-overriding-header "The Self"))))
+      nil nil)
+     ("w" "The Work" tags-todo "work" nil)
+     ("p" "The Project" tags "" nil))))
  '(org-agenda-files (quote ("~/org/now.org"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
